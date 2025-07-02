@@ -9,7 +9,7 @@ export const corsConfing: CorsOptions = {
     }
     console.log("Origen:", origin);
 
-    if (whiteList.includes(origin)) {
+    if (!origin || whiteList.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Error de CORS"), false);
