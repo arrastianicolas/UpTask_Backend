@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 export interface IToken extends Document {
   token: string;
   user: Types.ObjectId;
-  createdAt: Date;
+  expiresAt: Date;
 }
 
 const tokenSchema: Schema = new Schema({
@@ -17,8 +17,8 @@ const tokenSchema: Schema = new Schema({
   },
   expiresAt: {
     type: Date,
-    default: Date.now(),
-    expires: "10m",
+    default: () => Date.now() + 10 * 60 * 1000, // 10 minutos en el futuro
+    expires: 0, // TTL de MongoDB, 0 porque ya calculas la expiración manualmente
   },
 });
 
